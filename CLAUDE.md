@@ -24,7 +24,7 @@ janeappherotitle.png    Legacy logo asset (unused)
 ## Key Details
 
 - **Phone**: (714) 293-5544
-- **Address**: 13341 Garden Grove Boulevard, Garden Grove, CA 92843
+- **Address**: 13341 Garden Grove Boulevard Suite B, Garden Grove, CA 92843
 - **Hours**: Mon, Tue, Thu, Fri 9AM–5PM; Wed, Sat, Sun Closed
 - **Practitioner**: Jane Chung, MSOM, L.Ac
 
