@@ -10,7 +10,7 @@ Static single-page website for Jane Acupuncture, a traditional Korean medicine p
 - **CSS3** — `styles.css` (design tokens, BEM-style classes, fluid typography, responsive breakpoints)
 - **Vanilla JS** — `script.js` (mobile nav, scroll effects, IntersectionObserver animations)
 - **Fonts** — Google Fonts: Cormorant Garamond (serif headings), Inter (sans body)
-- **Images** — Unsplash CDN (no local images except `janeappherotitle.png`, currently unused)
+- **Images** — Unsplash CDN for stock photography; local WebP for the practitioner portrait
 
 ## File Structure
 
@@ -19,6 +19,8 @@ index.html              Main page
 styles.css              All styles
 script.js               All interactivity
 janeappherotitle.png    Legacy logo asset (unused)
+jane-portrait.webp      Jane Chung portrait, 1200x1500 (28KB)
+jane-portrait-800.webp  Same portrait at 800w for srcset (16KB)
 ```
 
 ## Key Details
@@ -45,7 +47,7 @@ Design tokens are CSS custom properties in `:root` (colors, typography, spacing,
 - Do not add a build step or npm dependencies — keep it zero-dependency
 - Do not inject styles via JS — put all CSS in `styles.css`
 - The Google Maps embed uses approximate coordinates; update with real embed URL if needed
-- `janeappherotitle.png` is 2MB — do not add more large binary assets
+- `janeappherotitle.png` is 2MB — do not add more large binary assets. Encode new photos as WebP (`cwebp -q 80`), size them to their display width at 2x, and serve them via `srcset`
 
 ## Deployment
 
