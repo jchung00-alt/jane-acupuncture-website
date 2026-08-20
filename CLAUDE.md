@@ -9,7 +9,7 @@ Static single-page website for Jane Acupuncture, a traditional Korean medicine p
 - **HTML5** — `index.html` (single page, ~580 lines)
 - **CSS3** — `styles.css` (design tokens, BEM-style classes, fluid typography, responsive breakpoints)
 - **Vanilla JS** — `script.js` (mobile nav, scroll effects, IntersectionObserver animations)
-- **Fonts** — Google Fonts: Cormorant Garamond (serif headings), Inter (sans body)
+- **Fonts** — Google Fonts: Cormorant Garamond 500 + italic 400 (serif headings), Inter variable 400..600 (sans body). Only these weights are requested; every serif rule uses 500 or italic 400, so adding a weight to CSS means adding it to the font URL too.
 - **Images** — all local WebP with srcset; no external image CDN. Photos are Unsplash free-license (commercial use permitted, no attribution required)
 
 ## File Structure
@@ -21,6 +21,9 @@ script.js               All interactivity
 .gitignore              Ignores .wrangler/ local cache and .DS_Store
 jane-portrait.webp      Jane Chung portrait, 1200x1500 (28KB)
 jane-portrait-800.webp  Same portrait at 800w for srcset (16KB)
+robots.txt                    Crawler directives + sitemap pointer
+sitemap.xml                   Single-URL sitemap
+og-image.jpg                  1200x630 social preview (64KB)
 hero-acupuncture-600.webp     Hero photo, 600w (8.7KB)
 hero-acupuncture-1000.webp    Same at 1000w (17KB)
 hero-acupuncture-1500.webp    Same at 1500w (29KB)
@@ -52,7 +55,9 @@ Design tokens are CSS custom properties in `:root` (colors, typography, spacing,
 
 - Do not add a build step or npm dependencies — keep it zero-dependency
 - Do not inject styles via JS — put all CSS in `styles.css`
-- The Google Maps embed uses approximate coordinates; update with real embed URL if needed
+- Keep scroll work inside the single `requestAnimationFrame` pass in `script.js`; do not add new scroll listeners or read layout (`offsetTop`, `offsetHeight`) during scroll
+- Decorative SVGs need `aria-hidden="true" focusable="false"`; repeated icons go in the `<symbol>` sprite at the top of `<body>`
+- The Google Maps embed uses an address query (`maps?q=...&output=embed`) so Google geocodes it; do not paste hand-edited `pb=` coordinate strings
 - Do not add large binary assets. Encode new photos as WebP (`cwebp -q 60`–`80`, lower for texture-heavy images), size them to their display width at 2x, and serve them via `srcset`
 - Do not commit `.wrangler/` — it is local Cloudflare cache containing account metadata
 

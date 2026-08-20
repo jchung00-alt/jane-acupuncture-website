@@ -12,16 +12,34 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav__link');
     const body = document.body;
 
-    function toggleMenu() {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-        body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    const FOCUSABLE = 'a[href], button:not([disabled])';
+
+    function setMenuState(open) {
+        navToggle.classList.toggle('active', open);
+        navMenu.classList.toggle('active', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        navToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+        body.style.overflow = open ? 'hidden' : '';
     }
 
-    function closeMenu() {
-        navToggle.classList.remove('active');
-        navMenu.classList.remove('active');
-        body.style.overflow = '';
+    function isMenuOpen() {
+        return navMenu.classList.contains('active');
+    }
+
+    function openMenu() {
+        setMenuState(true);
+        const first = navMenu.querySelector(FOCUSABLE);
+        if (first) first.focus();
+    }
+
+    function closeMenu(returnFocus) {
+        const wasOpen = isMenuOpen();
+        setMenuState(false);
+        if (wasOpen && returnFocus && navToggle) navToggle.focus();
+    }
+
+    function toggleMenu() {
+        if (isMenuOpen()) closeMenu(true); else openMenu();
     }
 
     if (navToggle) {
@@ -30,22 +48,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close menu when clicking a nav link
     navLinks.forEach(link => {
-        link.addEventListener('click', closeMenu);
+        link.addEventListener('click', function() { closeMenu(false); });
     });
 
     // Close menu on escape key
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-            closeMenu();
+        if (!isMenuOpen()) return;
+
+        if (e.key === 'Escape') {
+            closeMenu(true);
+            return;
+        }
+
+        if (e.key === 'Tab') {
+            const items = Array.from(navMenu.querySelectorAll(FOCUSABLE));
+            if (!items.length) return;
+            const first = items[0];
+            const last = items[items.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
         }
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (navMenu.classList.contains('active') &&
+        if (isMenuOpen() &&
             !navMenu.contains(e.target) &&
             !navToggle.contains(e.target)) {
-            closeMenu();
+            closeMenu(false);
         }
     });
 
@@ -53,12 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Header Scroll Effect
     // -----------------------------------------
     const header = document.getElementById('header');
-
-    function handleScroll() {
-        header.classList.toggle('scrolled', window.pageYOffset > 50);
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // -----------------------------------------
     // Smooth Scroll for Anchor Links
@@ -136,38 +166,60 @@ document.addEventListener('DOMContentLoaded', function() {
     // -----------------------------------------
     const sections = document.querySelectorAll('section[id]');
 
-    function highlightNavigation() {
-        const scrollY = window.pageYOffset;
+    // Geometry is measured once and on resize, never inside the scroll handler —
+    // reading offsetTop/offsetHeight mid-scroll forces a synchronous layout.
+    let sectionBounds = [];
 
-        sections.forEach(section => {
-            const sectionHeight = section.offsetHeight;
-            const sectionTop = section.offsetTop - 100;
-            const sectionId = section.getAttribute('id');
-            const navLink = document.querySelector(`.nav__link[href="#${sectionId}"]`);
-
-            if (navLink) {
-                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                    navLink.classList.add('active');
-                } else {
-                    navLink.classList.remove('active');
-                }
-            }
-        });
+    function measureSections() {
+        sectionBounds = Array.from(sections).map(section => ({
+            link: document.querySelector(`.nav__link[href="#${section.getAttribute('id')}"]`),
+            top: section.offsetTop - 100,
+            bottom: section.offsetTop - 100 + section.offsetHeight
+        })).filter(entry => entry.link);
     }
 
-    window.addEventListener('scroll', highlightNavigation, { passive: true });
+    function highlightNavigation(scrollY) {
+        sectionBounds.forEach(entry => {
+            entry.link.classList.toggle('active', scrollY > entry.top && scrollY <= entry.bottom);
+        });
+    }
 
     // -----------------------------------------
     // Parallax Effect for Hero Background
     // -----------------------------------------
     const heroBg = document.querySelector('.hero__bg');
+    const allowParallax = heroBg && window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
 
-    if (heroBg && window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
-        }, { passive: true });
+    // One listener, one rAF, one write per frame — replaces three independent
+    // scroll handlers that interleaved layout reads with style writes.
+    let ticking = false;
+
+    function onFrame() {
+        const scrollY = window.pageYOffset;
+
+        if (header) header.classList.toggle('scrolled', scrollY > 50);
+        highlightNavigation(scrollY);
+        if (allowParallax) heroBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+
+        ticking = false;
     }
+
+    function onScroll() {
+        if (!ticking) {
+            ticking = true;
+            window.requestAnimationFrame(onFrame);
+        }
+    }
+
+    measureSections();
+    onFrame();
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function() {
+        measureSections();
+        onScroll();
+    }, { passive: true });
+    window.addEventListener('load', measureSections);
 
     // -----------------------------------------
     // Lazy Loading Images Enhancement

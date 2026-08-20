@@ -16,6 +16,7 @@
     --color-secondary-light: #D4BC9A; /* Light gold */
 
     --color-accent: #8B7355;         /* Warm brown */
+    --color-star: #A8843F;           /* Gold, darkened to clear 3:1 on cream */
 
     /* Neutrals */
     --color-cream: #FAF8F5;          /* Off-white cream */
@@ -126,6 +127,33 @@ a {
     transition: color var(--transition-fast);
 }
 
+/* Keyboard focus: one visible treatment for every interactive element.
+   :focus-visible keeps it off mouse clicks. */
+:focus-visible {
+    outline: 2px solid var(--color-primary-dark);
+    outline-offset: 3px;
+    border-radius: var(--radius-sm);
+}
+
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -110%);
+    z-index: 2000;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-primary-dark);
+    color: #fff;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    transition: transform var(--transition-fast);
+}
+
+.skip-link:focus {
+    transform: translate(-50%, 0);
+}
+
 ul, ol {
     list-style: none;
 }
@@ -172,7 +200,7 @@ button {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--color-primary);
+    color: var(--color-primary-dark);
     margin-bottom: var(--space-md);
 }
 
@@ -945,7 +973,7 @@ button {
     display: flex;
     gap: 2px;
     margin-bottom: var(--space-lg);
-    color: var(--color-secondary);
+    color: var(--color-star);
 }
 
 .testimonial__stars svg {
@@ -975,7 +1003,7 @@ button {
 
 .testimonial__detail {
     font-size: var(--text-sm);
-    color: var(--color-text-muted);
+    color: var(--color-text-light);
 }
 
 /* Testimonials CTA */
