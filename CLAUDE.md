@@ -10,7 +10,7 @@ Static single-page website for Jane Acupuncture, a traditional Korean medicine p
 - **CSS3** — `styles.css` (design tokens, BEM-style classes, fluid typography, responsive breakpoints)
 - **Vanilla JS** — `script.js` (mobile nav, scroll effects, IntersectionObserver animations)
 - **Fonts** — Google Fonts: Cormorant Garamond (serif headings), Inter (sans body)
-- **Images** — Unsplash CDN for stock photography; local WebP for the practitioner portrait
+- **Images** — all local WebP with srcset; no external image CDN. Photos are Unsplash free-license (commercial use permitted, no attribution required)
 
 ## File Structure
 
@@ -21,6 +21,9 @@ script.js               All interactivity
 .gitignore              Ignores .wrangler/ local cache and .DS_Store
 jane-portrait.webp      Jane Chung portrait, 1200x1500 (28KB)
 jane-portrait-800.webp  Same portrait at 800w for srcset (16KB)
+hero-acupuncture-600.webp     Hero photo, 600w (8.7KB)
+hero-acupuncture-1000.webp    Same at 1000w (17KB)
+hero-acupuncture-1500.webp    Same at 1500w (29KB)
 about-korean-herbs-500.webp   About-section ingredients photo, 500w (65KB)
 about-korean-herbs-800.webp   Same at 800w (139KB)
 about-korean-herbs-1100.webp  Same at 1100w (220KB)
