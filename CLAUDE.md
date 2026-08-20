@@ -12,6 +12,12 @@ Static single-page website for Jane Acupuncture, a traditional Korean medicine p
 - **Fonts** — Google Fonts: Cormorant Garamond 500 + italic 400 (serif headings), Inter variable 400..600 (sans body). Only these weights are requested; every serif rule uses 500 or italic 400, so adding a weight to CSS means adding it to the font URL too.
 - **Images** — all local WebP with srcset; no external image CDN. Photos are Unsplash free-license (commercial use permitted, no attribution required)
 
+## Open Work
+
+See `NEXT-STEPS.md` for outstanding items from the 2026-08-19 audit — what is
+blocked on the clinic's input, what is ready to build, and constraints to know
+before editing (font weights, scroll handling, contrast tokens, deploy caching).
+
 ## File Structure
 
 ```
@@ -19,6 +25,7 @@ index.html              Main page
 styles.css              All styles
 script.js               All interactivity
 .gitignore              Ignores .wrangler/ local cache and .DS_Store
+NEXT-STEPS.md           Open items from the site audit
 jane-portrait.webp      Jane Chung portrait, 1200x1500 (28KB)
 jane-portrait-800.webp  Same portrait at 800w for srcset (16KB)
 robots.txt                    Crawler directives + sitemap pointer
