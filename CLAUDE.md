@@ -18,9 +18,12 @@ Static single-page website for Jane Acupuncture, a traditional Korean medicine p
 index.html              Main page
 styles.css              All styles
 script.js               All interactivity
-janeappherotitle.png    Legacy logo asset (unused)
+.gitignore              Ignores .wrangler/ local cache and .DS_Store
 jane-portrait.webp      Jane Chung portrait, 1200x1500 (28KB)
 jane-portrait-800.webp  Same portrait at 800w for srcset (16KB)
+about-korean-herbs-500.webp   About-section ingredients photo, 500w (65KB)
+about-korean-herbs-800.webp   Same at 800w (139KB)
+about-korean-herbs-1100.webp  Same at 1100w (220KB)
 ```
 
 ## Key Details
@@ -47,7 +50,8 @@ Design tokens are CSS custom properties in `:root` (colors, typography, spacing,
 - Do not add a build step or npm dependencies — keep it zero-dependency
 - Do not inject styles via JS — put all CSS in `styles.css`
 - The Google Maps embed uses approximate coordinates; update with real embed URL if needed
-- `janeappherotitle.png` is 2MB — do not add more large binary assets. Encode new photos as WebP (`cwebp -q 80`), size them to their display width at 2x, and serve them via `srcset`
+- Do not add large binary assets. Encode new photos as WebP (`cwebp -q 60`–`80`, lower for texture-heavy images), size them to their display width at 2x, and serve them via `srcset`
+- Do not commit `.wrangler/` — it is local Cloudflare cache containing account metadata
 
 ## Deployment
 

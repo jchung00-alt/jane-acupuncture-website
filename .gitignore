@@ -1,0 +1,5 @@
+# Cloudflare Wrangler local cache (contains account metadata, churns on deploy)
+.wrangler/
+
+# macOS
+.DS_Store
