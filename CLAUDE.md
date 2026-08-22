@@ -46,6 +46,26 @@ about-korean-herbs-1100.webp  Same at 1100w (220KB)
 - **Hours**: Mon, Tue, Thu, Fri 9AM–5PM; Wed, Sat, Sun Closed
 - **Practitioner**: Jane Chung, MSOM, L.Ac
 
+## Color System
+
+Gold and ivory. The important constraint: **light gold cannot carry text.**
+At its darkest usable value it reaches only 2.7:1 on ivory, so it decorates
+and never informs. Three tiers:
+
+| Token | Value | Role |
+|---|---|---|
+| `--color-gold` / `--color-secondary` | `#C4A77D` | Ornament, button fills, gradients |
+| `--color-gold-mid` / `--color-star` | `#A8843F` | Logo mark, stars — 3.34:1, clears the graphics floor |
+| `--color-primary` | `#87692B` | Anything read: text, icons, borders — 4.93:1 ivory / 4.61:1 sand |
+| `--color-primary-dark` | `#6F5624` | Hover, focus rings — 6.64:1 |
+
+Text on a gold fill uses `--color-ink` (`#2A2620`, 6.57:1), never white.
+White is only legible on `--color-primary` or darker.
+
+The deep tiers read bronze rather than gold — that is the cost of 4.5:1. If a
+gold looks too olive, the fix is to move it to an ornamental role, not to
+lighten it in place.
+
 ## CSS Architecture
 
 Design tokens are CSS custom properties in `:root` (colors, typography, spacing, shadows, transitions). Naming follows BEM: `.block__element--modifier`. Fluid typography uses `clamp()`. Breakpoints: 1024px, 900px, 700px, 600px.
