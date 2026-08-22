@@ -816,6 +816,93 @@ button {
     border-color: var(--color-primary);
 }
 
+/* Insurance
+   Shares the conditions card's shell, but the entries are a list rather than
+   tags because some carry a second line of detail. */
+.services__insurance {
+    background-color: var(--color-cream);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    margin-top: var(--space-xl);
+    text-align: center;
+}
+
+.services__insurance h3 {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    margin-bottom: var(--space-md);
+    color: var(--color-dark);
+}
+
+.insurance__intro {
+    color: var(--color-text-light);
+    max-width: 46ch;
+    margin: 0 auto var(--space-xl);
+}
+
+.insurance__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: var(--space-md) var(--space-xl);
+    text-align: left;
+    max-width: 44rem;
+    margin: 0 auto;
+}
+
+.insurance__item {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    align-items: start;
+    column-gap: var(--space-md);
+    row-gap: 2px;
+}
+
+.insurance__item svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary-dark);
+    margin-top: 0.2em;
+}
+
+.insurance__name {
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.insurance__detail {
+    grid-column: 2;
+    font-size: var(--text-sm);
+    color: var(--color-text-light);
+}
+
+.insurance__note {
+    margin: var(--space-xl) auto 0;
+    max-width: 48ch;
+    font-size: var(--text-sm);
+    color: var(--color-text-light);
+}
+
+.insurance__note a {
+    color: var(--color-primary-dark);
+    font-weight: 500;
+    border-bottom: 1px solid currentColor;
+}
+
+.insurance__note a:hover {
+    color: var(--color-primary);
+}
+
+@media (max-width: 600px) {
+    .services__insurance {
+        padding: var(--space-xl) var(--space-lg);
+    }
+
+    .insurance__list {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Services Responsive */
 @media (max-width: 900px) {
     .services__grid {

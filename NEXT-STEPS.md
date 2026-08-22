@@ -13,23 +13,16 @@ https://claude.ai/code/artifact/3c185117-5cd4-4d88-8c7f-91764f2702ac
 These cannot be written without facts only the clinic has. Nothing is
 half-built; each is untouched.
 
-### 1. Insurance information
-Currently the word "insurance" appears **zero times** on the site, yet
-"Conditions We Treat" advertises *Worker's Comp* and *Personal Injury* —
-both purely billing categories. The site signals it handles claims without
-answering the question that raises.
+Items 1 and 2 are resolved; kept here so the numbering in older notes holds.
 
-Need to know:
-- Which insurance plans are accepted
-- Whether Worker's Comp and personal-injury liens are handled
-- The self-pay rate
+### ~~1. Insurance information~~ — DONE 2026-08-21
+Added as an `#insurance` block inside the Services section, after "Conditions
+We Treat". Also added `paymentAccepted` to the structured data and an
+Insurance link to the footer.
 
-Then: add a block near Contact, and move the two billing tags out of
-"Conditions We Treat" into it (that's item 2 below, same edit).
-
-### 2. Move billing tags out of the conditions list
-`Worker's Comp` and `Personal Injury` are payment arrangements, not
-conditions. They belong in the insurance block. Blocked on item 1.
+### ~~2. Move billing tags out of the conditions list~~ — DONE 2026-08-21
+`Worker's Comp` and `Personal Injury` moved from "Conditions We Treat" into
+the insurance block, where they answer a question rather than pose one.
 
 ### 3. "Your first visit" content
 Nothing says how long a session runs, what it costs, how many visits a
