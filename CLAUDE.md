@@ -84,6 +84,7 @@ Design tokens are CSS custom properties in `:root` (colors, typography, spacing,
 - Do not inject styles via JS — put all CSS in `styles.css`
 - Keep scroll work inside the single `requestAnimationFrame` pass in `script.js`; do not add new scroll listeners or read layout (`offsetTop`, `offsetHeight`) during scroll
 - Decorative SVGs need `aria-hidden="true" focusable="false"`; repeated icons go in the `<symbol>` sprite at the top of `<body>`
+- When bulk-editing tags, exclude the favicon: its `href` holds an inline SVG, so a regex over `<svg ...>` will inject double-quoted attributes inside a double-quoted attribute and silently truncate it
 - The Google Maps embed uses an address query (`maps?q=...&output=embed`) so Google geocodes it; do not paste hand-edited `pb=` coordinate strings
 - Do not add large binary assets. Encode new photos as WebP (`cwebp -q 60`–`80`, lower for texture-heavy images), size them to their display width at 2x, and serve them via `srcset`
 - Do not commit `.wrangler/` — it is local Cloudflare cache containing account metadata
