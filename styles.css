@@ -69,6 +69,8 @@
 
     /* Layout */
     --container-max: 1280px;
+    --media-stack-max: 480px;   /* shared cap for stacked media, so every
+                                   image keeps the same left/right margin */
     --container-padding: clamp(1.5rem, 5vw, 3rem);
 
     /* Borders & Radius */
@@ -556,7 +558,7 @@ button {
 
     .hero__image {
         order: 0;
-        max-width: 500px;
+        max-width: var(--media-stack-max);
         margin: 0 auto;
     }
 
@@ -694,7 +696,7 @@ button {
     .about__images {
         grid-column: 1;
         grid-row: 2;
-        max-width: 460px;
+        max-width: var(--media-stack-max);
         max-height: none;
         margin: 0 auto;
     }
@@ -702,7 +704,6 @@ button {
 
 @media (max-width: 600px) {
     .about__images {
-        max-width: none;
         aspect-ratio: 3 / 4;
     }
 }
@@ -792,6 +793,12 @@ button {
     padding: var(--space-2xl);
     border-radius: var(--radius-lg);
     text-align: center;
+}
+
+@media (max-width: 600px) {
+    .services__conditions {
+        padding: var(--space-xl) var(--space-lg);
+    }
 }
 
 .services__conditions h3 {
@@ -1025,7 +1032,7 @@ button {
     .practitioner__image {
         grid-column: 1;
         grid-row: 1;
-        max-width: 450px;
+        max-width: var(--media-stack-max);
         margin: 0 auto;
     }
 
