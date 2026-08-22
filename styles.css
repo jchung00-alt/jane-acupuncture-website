@@ -321,7 +321,7 @@ button {
 .nav__menu {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: var(--space-lg);
 }
 
 .nav__link {
@@ -373,7 +373,7 @@ button {
 }
 
 /* Mobile Navigation */
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
     .nav__toggle {
         display: flex;
         z-index: 1001;

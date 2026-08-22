@@ -164,23 +164,35 @@ document.addEventListener('DOMContentLoaded', function() {
     // -----------------------------------------
     // Active Navigation Highlight
     // -----------------------------------------
-    const sections = document.querySelectorAll('section[id]');
+    // Drive the highlight from the nav links themselves, so a target that is not
+    // a top-level <section> (Insurance lives inside Services) still tracks.
+    const navTargets = Array.from(document.querySelectorAll('.nav__link[href^="#"]'))
+        .map(link => ({ link: link, el: document.getElementById(link.getAttribute('href').slice(1)) }))
+        .filter(entry => entry.el);
 
     // Geometry is measured once and on resize, never inside the scroll handler —
-    // reading offsetTop/offsetHeight mid-scroll forces a synchronous layout.
+    // reading layout mid-scroll forces a synchronous reflow. getBoundingClientRect
+    // is used because offsetTop is relative to the offsetParent, which is wrong
+    // for a nested target.
     let sectionBounds = [];
 
     function measureSections() {
-        sectionBounds = Array.from(sections).map(section => ({
-            link: document.querySelector(`.nav__link[href="#${section.getAttribute('id')}"]`),
-            top: section.offsetTop - 100,
-            bottom: section.offsetTop - 100 + section.offsetHeight
-        })).filter(entry => entry.link);
+        sectionBounds = navTargets.map(entry => {
+            const top = entry.el.getBoundingClientRect().top + window.pageYOffset - 100;
+            return { link: entry.link, top: top, bottom: top + entry.el.offsetHeight };
+        });
     }
 
     function highlightNavigation(scrollY) {
+        // Ranges nest, so pick the innermost match and light exactly one link.
+        let best = null;
         sectionBounds.forEach(entry => {
-            entry.link.classList.toggle('active', scrollY > entry.top && scrollY <= entry.bottom);
+            if (scrollY >= entry.top && scrollY <= entry.bottom) {
+                if (!best || entry.top > best.top) best = entry;
+            }
+        });
+        sectionBounds.forEach(entry => {
+            entry.link.classList.toggle('active', entry === best);
         });
     }
 
