@@ -887,12 +887,6 @@ button {
     color: var(--color-text);
 }
 
-.insurance__detail {
-    grid-column: 2;
-    font-size: var(--text-sm);
-    color: var(--color-text-light);
-}
-
 .insurance__note {
     margin: var(--space-xl) auto 0;
     max-width: 48ch;
